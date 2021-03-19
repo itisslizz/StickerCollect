@@ -16,5 +16,14 @@ namespace Panini.Test
             var pack = shop.BuyPack();
             pack.Stickers.Count.Should().Be(5);
         }
+        
+        [TestMethod]
+        public void When_User_Buys_Pack_Should_Increase_Stat()
+        {
+            var shop = new Shop(669, 5);
+            var user = new User(shop);
+            user.BuyPack();
+            user.PacksBought.Should().Be(1);
+        }
     }
 }
