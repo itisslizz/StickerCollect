@@ -2,6 +2,7 @@ namespace Panini.Core
 {
     using Panini.Core.Models;
     using System.Collections.Generic;
+    using System.Linq;
 
 
     public class User
@@ -14,7 +15,7 @@ namespace Panini.Core
 
         private readonly Shop _myShop;
 
-        private List<Pack> _packs = new List<Pack>();
+        public List<Pack> Packs { get; set; } = new List<Pack>();
 
         public User(Shop myShop)
         {
@@ -25,7 +26,43 @@ namespace Panini.Core
         {
             var pack = _myShop.BuyPack();
             PacksBought++;
-            _packs.Add(pack);
+            Packs.Add(pack);
+        }
+
+        public bool OpenPack()
+        {
+            var pack = Packs.FirstOrDefault();
+            if (pack == null)
+                return false;
+            else
+                Packs.Remove(pack);
+
+            foreach(var sticker in pack.Stickers)
+            {
+                UseSticker(sticker);
+            }
+            return true;
+        }
+
+        public void UseSticker(Sticker sticker)
+        {
+            if (Album.Stickers.TryGetValue(sticker.Number, out var existingSticker))
+            {
+                AddStickerToStash(sticker);
+            }
+            else 
+                Album.Stickers[sticker.Number] = sticker;
+
+        }
+
+        private void AddStickerToStash(Sticker sticker)
+        {
+            if (Stash.TryGetValue(sticker.Number, out var stickerStash)){
+                stickerStash.Add(sticker);
+            } else {
+                Stash[sticker.Number] = new List<Sticker>(){sticker};
+            }
+
         }
 
     }

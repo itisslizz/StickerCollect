@@ -15,12 +15,11 @@ namespace Panini.Core.Models
 
     public class Album 
     {
-        public List<Sticker> Stickers { get; set; } = new List<Sticker>();
+        public Dictionary<int, Sticker> Stickers { get; set; } = new Dictionary<int, Sticker>();
     }
 
     public class Pack 
     {
-
         public List<Sticker> Stickers { get; }
 
         public Pack(List<Sticker> stickers) 
