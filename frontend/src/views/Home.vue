@@ -1,18 +1,42 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-  </div>
+    <div class="title">
+      Your completed your collection after buying {{ totalPacks }} packs.
+    </div>
+    <HelloWorld :data="stats" :styles="myStyles"/>
+    </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import api from '@/StickerCollectorApi.js';
+import HelloWorld from '../components/HelloWorld.vue';
+
 
 export default {
-  name: "Home",
-  components: {
-    HelloWorld,
+  components: { HelloWorld },
+  data() {
+    return {
+      loading: false,
+      userRecords: {},
+      error: "",
+      isLogged: false,
+      stats: [],
+      height: 400,
+      totalPacks: 0
+    }
   },
-};
+  computed: {
+    myStyles () {
+      return {
+        height: `${this.height}px`,
+        position: 'relative'
+      }
+    }
+  },
+  async created() {
+    this.stats = await api.getStats(5, 682)
+    this.totalPacks = this.stats[this.stats.length-1].x
+  },
+}
 </script>
