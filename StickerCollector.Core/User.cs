@@ -37,7 +37,7 @@ namespace StickerCollector.Core
             else
                 Packs.Remove(pack);
 
-            foreach(var sticker in pack.Stickers)
+            foreach (var sticker in pack.Stickers)
             {
                 UseSticker(sticker);
             }
@@ -50,21 +50,40 @@ namespace StickerCollector.Core
             {
                 AddStickerToStash(sticker);
             }
-            else 
+            else
                 Album.Stickers[sticker.Number] = sticker;
 
         }
 
         private void AddStickerToStash(Sticker sticker)
         {
-            if (Stash.TryGetValue(sticker.Number, out var stickerStash)){
+            if (Stash.TryGetValue(sticker.Number, out var stickerStash))
+            {
                 stickerStash.Add(sticker);
-            } else {
-                Stash[sticker.Number] = new List<Sticker>(){sticker};
+            }
+            else
+            {
+                Stash[sticker.Number] = new List<Sticker>() { sticker };
             }
 
         }
 
+        public void UseStash(User user)
+        {
+            foreach (var stickers in user.Stash)
+            {
+                if (stickers.Value.Count > 0)
+                {
+                    if (!Album.Stickers.TryGetValue(stickers.Key, out _))
+                    {
+                        var sticker = stickers.Value.First();
+                        Album.Stickers[sticker.Number] = sticker;
+                        stickers.Value.Remove(sticker);
+                    }
+                }
+            }
+        }
+
     }
-    
+
 }

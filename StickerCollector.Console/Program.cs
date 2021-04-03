@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Linq;
 
 namespace StickerCollector.Console
 {
@@ -25,6 +25,12 @@ namespace StickerCollector.Console
                 
             }
             System.Console.WriteLine($"You had to buy {user.PacksBought} packs");
+            var simulator = new Simulator(678, 5);
+            System.Console.WriteLine("How many people are in your share group?");
+            var numUsers = int.Parse(System.Console.ReadLine());
+            var result = simulator.SimulateMultipleUsers(numUsers);
+            System.Console.WriteLine($"======================================");
+            System.Console.WriteLine($"Packs Bought: {result[0].First().X}");
 
         }
     }

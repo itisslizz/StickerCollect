@@ -20,10 +20,13 @@ namespace StickerCollector.WebApi.Controllers
             _simulator = simulator;
         }
         [HttpGet]
-        public ActionResult GetSimulationData()
+        public ActionResult GetSimulationData(int numUsers)
         {
-            return Ok(_simulator.SimulateSingleUser());
+            if (numUsers < 1 || numUsers > 20)
+                return BadRequest("Too many users specified. Choose in the range between 0 and 20");
+            return Ok(_simulator.SimulateMultipleUsers(numUsers));
         }
+
 
     }
 }
