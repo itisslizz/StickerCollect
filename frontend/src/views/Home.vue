@@ -3,18 +3,18 @@
     <div class="title">
       Your completed your collection after buying {{ totalPacks }} packs.
     </div>
-    <HelloWorld :data="stats" :styles="myStyles"/>
+    <PacksChart :data="stats" :styles="myStyles"/>
     </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import api from '@/StickerCollectorApi.js';
-import HelloWorld from '../components/HelloWorld.vue';
+import PacksChart from '../components/PacksChart.vue';
 
 
 export default {
-  components: { HelloWorld },
+  components: { PacksChart },
   data() {
     return {
       loading: false,
@@ -35,7 +35,7 @@ export default {
     }
   },
   async created() {
-    this.stats = await api.getStats(5, 682)
+    this.stats = await api.getStats()
     this.totalPacks = this.stats[this.stats.length-1].x
   },
 }

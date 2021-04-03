@@ -12,6 +12,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
+using StickerCollector.Core;
+
 namespace StickerCollector.WebApi
 {
     public class Startup
@@ -41,6 +43,9 @@ namespace StickerCollector.WebApi
                 });
             });
 
+            var numberOfStickers = int.Parse(Configuration["Collection:NumberOfStickers"]);
+            var packSize = int.Parse(Configuration["Collection:PackSize"]);
+            services.AddSingleton(new Simulator(numberOfStickers, packSize));
 
             services.AddSwaggerGen(c =>
             {

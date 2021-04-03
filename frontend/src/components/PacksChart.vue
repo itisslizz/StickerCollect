@@ -11,8 +11,8 @@ export default {
         {
           datasets: [
             {
-              label: "Opening packs",
-              backgroundColor: "#f87979",
+              label: "Stickers collected",
+              backgroundColor: "#4287f5",
               data: stats,
               pointStyle: "line",
             },

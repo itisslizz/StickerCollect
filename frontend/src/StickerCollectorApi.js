@@ -15,7 +15,7 @@ export default {
             return req.data
         })
     },
-    getStats(packSize, numberOfStickers) {
-        return this.execute('get', `/?numberOfStickers=${numberOfStickers}&packSize=${packSize}`)
+    getStats() {
+        return this.execute('get', '/')
     },
 }
